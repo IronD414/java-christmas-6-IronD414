@@ -6,6 +6,12 @@ import org.assertj.core.data.MapEntry;
 import java.util.*;
 
 public class Application {
+    public static int findPriceByName(List<Map<String, Integer>> menus, String menuName){
+        for (Map<String, Integer> eachMenus : menus){
+            if (eachMenus.containsKey(menuName)) return eachMenus.get(menuName);
+        }
+        return 0;
+    }
     public static void main(String[] args) {
         Map<String, Integer> menuAppetizer = Map.of(
                 "양송이수프", 6000,
@@ -48,6 +54,7 @@ public class Application {
 
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
 
+        int totalPriceBeforeDiscount;
         Map<String, Integer> order = new HashMap<>();
         while (true){
             try{
@@ -55,6 +62,7 @@ public class Application {
                 List<String> dupeChecker = new ArrayList<>();
                 boolean thereIsFoodMenu = false;
                 int totalMenuQuantity = 0;
+                totalPriceBeforeDiscount = 0;
 
                 String[] splitUserInput = userInput.split(",");
                 for (String eachUserInput : splitUserInput){
@@ -78,6 +86,7 @@ public class Application {
                     if (!inMenus) throw new IllegalArgumentException();
                     if (userInputMenuQuantity < 1) throw new IllegalArgumentException();
 
+                    totalPriceBeforeDiscount += findPriceByName(menus, userInputMenuName) * userInputMenuQuantity;
                     order.put(userInputMenuName, userInputMenuQuantity);
                 }
                 if (dupeChecker.size() != new HashSet<>(dupeChecker).size()) throw new IllegalArgumentException();
@@ -102,6 +111,7 @@ public class Application {
             System.out.printf("%s %d개\n", eachOrder.getKey(), eachOrder.getValue());
         }
 
-
+        System.out.println("\n<할인 전 총주문 금액>");
+        System.out.println(totalPriceBeforeDiscount);
     }
 }

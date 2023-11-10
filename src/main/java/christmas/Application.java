@@ -1,6 +1,7 @@
 package christmas;
 
 import camp.nextstep.edu.missionutils.Console;
+import org.assertj.core.data.MapEntry;
 
 import java.util.*;
 
@@ -88,10 +89,19 @@ public class Application {
                 }
                 if (!thereIsFoodMenu) throw new IllegalArgumentException();
                 if (totalMenuQuantity > 20) throw new IllegalArgumentException();
+
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
         }
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", visitingDay);
+
+        System.out.println("\n<주문 메뉴>");
+        for (Map.Entry<String, Integer> eachOrder : order.entrySet()){
+            System.out.printf("%s %d개\n", eachOrder.getKey(), eachOrder.getValue());
+        }
+
+
     }
 }

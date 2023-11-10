@@ -51,6 +51,7 @@ public class Application {
         while (true){
             try{
                 userInput = Console.readLine();
+                List<String> dupeChecker = new ArrayList<>();
 
                 String[] splitUserInput = userInput.split(",");
                 for (String eachUserInput : splitUserInput){
@@ -58,12 +59,25 @@ public class Application {
 
                     String[] splitEachUserInput = eachUserInput.split("-");
                     String userInputMenuName = splitEachUserInput[0];
+
+                    dupeChecker.add(userInputMenuName);
+
                     int userInputMenuQuantity = Integer.parseInt(splitEachUserInput[1]);
 
+                    boolean inMenus = false;
+                    for (Map<String, Integer> specificMenus : menus){
+                        if (specificMenus.containsKey(userInputMenuName)) {
+                            inMenus = true;
+                            break;
+                        }
+                    }
+                    if (!inMenus) throw new IllegalArgumentException();
                     if (userInputMenuQuantity < 1) throw new IllegalArgumentException();
 
                     order.put(userInputMenuName, userInputMenuQuantity);
                 }
+                if (dupeChecker.size() != new HashSet<>(dupeChecker).size()) throw new IllegalArgumentException();
+
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");

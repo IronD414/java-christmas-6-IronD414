@@ -2,6 +2,11 @@ package christmas;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Application {
     public static void main(String[] args) {
 
@@ -24,5 +29,17 @@ public class Application {
         }
 
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+
+        Map<String, Integer> order = new HashMap<>();
+        while (true){
+            userInput = Console.readLine();
+
+            String[] splitUserInput = userInput.split(",");
+            for (String eachUserInput : splitUserInput){
+                String[] splitEachUserInput = eachUserInput.split("-");
+                order.put(splitEachUserInput[0], Integer.parseInt(splitEachUserInput[1]));
+            }
+            break;
+        }
     }
 }

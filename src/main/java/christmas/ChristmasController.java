@@ -1,9 +1,6 @@
 package christmas;
 
-import christmas.domain.model.Customer;
-import christmas.domain.model.DessertMenu;
-import christmas.domain.model.MainMenu;
-import christmas.domain.model.Menu;
+import christmas.domain.model.*;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -14,12 +11,14 @@ public class ChristmasController {
     OutputView outputView;
     Customer customer;
     int benefitPrice;
+    Menu giveAway;
 
     public ChristmasController(){
         inputView = new InputView();
         outputView = new OutputView();
         customer = new Customer();
         benefitPrice = 0;
+        giveAway = null;
     }
     public void run(){
         outputView.printWelcome();
@@ -30,30 +29,46 @@ public class ChristmasController {
         outputView.printMenu(customer.getCart());
         outputView.printTotalPriceBeforeDiscount(customer);
 
-        discountDDay(customer);
-        discountDayOfWeek(customer);
-        discountStar(customer);
+        presentGiveAway(customer);
+        if (giveAway != null) benefitPrice += giveAway.getPrice();
+        benefitPrice += discountDDay(customer);
+        benefitPrice += discountDayOfWeek(customer);
+        benefitPrice += discountStar(customer);
     }
-    private void discountDDay(Customer customer){
+    private void presentGiveAway(Customer customer){
+        if (customer.getTotalPrice() >= 12000)
+            giveAway = new DrinkMenu("샴페인");
+    }
+    private int discountDDay(Customer customer){
+        int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
-        if (visitingDate > 25) return;
-        customer.discounted(900 + 100*visitingDate);
+        if (visitingDate > 25) return benefitPrice;
+        benefitPrice = 900 + 100*visitingDate;
+        customer.discounted(benefitPrice);
+        return benefitPrice;
     }
-    private void discountDayOfWeek(Customer customer){
+    private int discountDayOfWeek(Customer customer){
+        int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
         Map<Menu, Integer> cart = customer.getCart();
         if (visitingDate%7 == 1 || visitingDate%7 == 2){
             for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
-                if (eachOrder.getKey() instanceof MainMenu) customer.discounted(2023 * eachOrder.getValue());
+                if (eachOrder.getKey() instanceof MainMenu) benefitPrice += 2023 * eachOrder.getValue();
             }
-            return;
+            customer.discounted(benefitPrice);
+            return benefitPrice;
         }
         for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
-            if (eachOrder.getKey() instanceof DessertMenu) customer.discounted(2023 * eachOrder.getValue());
+            if (eachOrder.getKey() instanceof DessertMenu) benefitPrice = 2023 * eachOrder.getValue();
         }
+        customer.discounted(benefitPrice);
+        return benefitPrice;
     }
-    private void discountStar(Customer customer){
+    private int discountStar(Customer customer){
+        int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
-        if (visitingDate%7 == 3 || visitingDate == 25) customer.discounted(1000);
+        if (visitingDate%7 == 3 || visitingDate == 25) benefitPrice = 1000;
+        customer.discounted(benefitPrice);
+        return benefitPrice;
     }
 }

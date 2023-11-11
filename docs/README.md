@@ -35,8 +35,8 @@
 ### 할인 기능
 - [X] 총주문 금액 기준 이상인지 검증
 - [X] 크리스마스 디데이 할인
-- [ ] 평일 할인
-- [ ] 주말 할인
+- [X] 평일 할인
+- [X] 주말 할인
 - [ ] 특별 할인
 
 ### 할인 외 혜택 기능
@@ -67,3 +67,4 @@
 ## 배운 기술
 Map 초기화 방법: Map.of()
 ArrayList 초기화 방법: List.of()
+Map iterate 방법: Map.Entry<> for each (mapObject).entrySet()

@@ -1,6 +1,5 @@
 package christmas;
 
-import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.model.Customer;
 import christmas.domain.model.DessertMenu;
 import christmas.domain.model.MainMenu;
@@ -33,6 +32,7 @@ public class ChristmasController {
 
         discountDDay(customer);
         discountDayOfWeek(customer);
+        discountStar(customer);
     }
     private void discountDDay(Customer customer){
         int visitingDate = customer.getVisitingDate();
@@ -51,5 +51,9 @@ public class ChristmasController {
         for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
             if (eachOrder.getKey() instanceof DessertMenu) customer.discounted(2023 * eachOrder.getValue());
         }
+    }
+    private void discountStar(Customer customer){
+        int visitingDate = customer.getVisitingDate();
+        if (visitingDate%7 == 3 || visitingDate == 25) customer.discounted(1000);
     }
 }

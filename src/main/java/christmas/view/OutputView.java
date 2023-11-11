@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    private NumberFormat numberFormat = NumberFormat.getInstance();
     public void printWelcome(){
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     }
@@ -18,7 +19,6 @@ public class OutputView {
     }
     public void printTotalPriceBeforeDiscount(Customer customer){
         System.out.println("\n<할인 전 총주문 금액>");
-        NumberFormat numberFormat = NumberFormat.getInstance();
         System.out.printf("%s원\n", numberFormat.format(customer.getTotalPrice()));
     }
     public void printGiveAway(Menu giveAway){
@@ -31,7 +31,6 @@ public class OutputView {
     }
     public void printBenefit(List<Integer> benefitPrice, Menu giveAway){
         System.out.println("\n<혜택 내역>");
-        NumberFormat numberFormat = NumberFormat.getInstance();
         if (benefitPrice.get(0) > 0){
             System.out.printf("크리스마스 디데이 할인: -%s원\n", numberFormat.format(benefitPrice.get(0)));
         }if (benefitPrice.get(1) > 0){
@@ -43,5 +42,15 @@ public class OutputView {
         }if (giveAway != null){
             System.out.printf("증정 이벤트: -%s원\n", numberFormat.format(giveAway.getPrice()));
         }
+        if (benefitPrice.get(0) == 0 && benefitPrice.get(1) == 0 && benefitPrice.get(2) == 0
+                && benefitPrice.get(3) == 0 && giveAway == null){
+            System.out.println("없음");
+        }
+    }
+    public void printTotalBenefitPrice(int benefitPrice, Menu giveAway){
+        System.out.println("\n<총혜택 금액>");
+        int totalPrice = benefitPrice;
+        if (giveAway != null) totalPrice += giveAway.getPrice();
+        System.out.printf("-%s원\n", numberFormat.format(totalPrice));
     }
 }

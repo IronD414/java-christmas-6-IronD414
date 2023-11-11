@@ -20,4 +20,12 @@ public class OutputView {
         NumberFormat numberFormat = NumberFormat.getInstance();
         System.out.printf("%s원\n", numberFormat.format(customer.getTotalPrice()));
     }
+    public void printGiveAway(Menu giveAway){
+        System.out.println("\n<증정 메뉴>");
+        if (giveAway == null){
+            System.out.println("없음");
+            return;
+        }
+        System.out.printf("%s %d개\n", giveAway.getName(), 1);
+    }
 }

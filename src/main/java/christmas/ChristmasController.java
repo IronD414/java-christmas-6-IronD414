@@ -37,6 +37,8 @@ public class ChristmasController {
         benefitPrice += discountDayOfWeek(customer);
         benefitPrice += discountStar(customer);
         giveEventBadge();
+
+        outputView.printGiveAway(giveAway);
     }
     private void presentGiveAway(Customer customer){
         if (customer.getTotalPrice() >= 12000)

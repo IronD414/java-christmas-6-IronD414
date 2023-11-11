@@ -12,6 +12,7 @@ public class ChristmasController {
     Customer customer;
     int benefitPrice;
     Menu giveAway;
+    String eventBadge;
 
     public ChristmasController(){
         inputView = new InputView();
@@ -19,6 +20,7 @@ public class ChristmasController {
         customer = new Customer();
         benefitPrice = 0;
         giveAway = null;
+        eventBadge = "없음";
     }
     public void run(){
         outputView.printWelcome();
@@ -34,6 +36,7 @@ public class ChristmasController {
         benefitPrice += discountDDay(customer);
         benefitPrice += discountDayOfWeek(customer);
         benefitPrice += discountStar(customer);
+        giveEventBadge();
     }
     private void presentGiveAway(Customer customer){
         if (customer.getTotalPrice() >= 12000)
@@ -70,5 +73,10 @@ public class ChristmasController {
         if (visitingDate%7 == 3 || visitingDate == 25) benefitPrice = 1000;
         customer.discounted(benefitPrice);
         return benefitPrice;
+    }
+    private void giveEventBadge(){
+        if (benefitPrice >= 5000) eventBadge = "별";
+        if (benefitPrice >= 10000) eventBadge = "트리";
+        if (benefitPrice >= 20000) eventBadge = "산타";
     }
 }

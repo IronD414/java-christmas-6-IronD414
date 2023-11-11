@@ -42,6 +42,7 @@ public class ChristmasController {
         outputView.printBenefit(benefitPrice, giveAway);
         outputView.printTotalBenefitPrice(getTotalBenefitPrice(), giveAway);
         outputView.printTotalPriceAfterDiscount(customer);
+        outputView.printEventBadge(eventBadge);
     }
     private void presentGiveAway(Customer customer){
         if (customer.getTotalPrice() >= 12000)
@@ -87,9 +88,9 @@ public class ChristmasController {
         return benefitPrice;
     }
     private void giveEventBadge(){
-        if (getTotalBenefitPrice() >= 5000) eventBadge = "별";
-        if (getTotalBenefitPrice() >= 10000) eventBadge = "트리";
-        if (getTotalBenefitPrice() >= 20000) eventBadge = "산타";
+        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 5000) eventBadge = "별";
+        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 10000) eventBadge = "트리";
+        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 20000) eventBadge = "산타";
     }
     private int getTotalBenefitPrice(){
         int totalBenefitPrice = 0;

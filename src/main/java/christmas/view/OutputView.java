@@ -57,4 +57,8 @@ public class OutputView {
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.printf("%s원\n", numberFormat.format(customer.getTotalPrice()));
     }
+    public void printEventBadge(String badge){
+        System.out.println("\n<12월 이벤트 배지>");
+        System.out.println(badge);
+    }
 }

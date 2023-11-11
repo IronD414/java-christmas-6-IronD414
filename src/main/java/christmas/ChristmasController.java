@@ -88,9 +88,11 @@ public class ChristmasController {
         return benefitPrice;
     }
     private void giveEventBadge(){
-        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 5000) eventBadge = "별";
-        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 10000) eventBadge = "트리";
-        if (getTotalBenefitPrice()+ giveAway.getPrice()*1 >= 20000) eventBadge = "산타";
+        int totalBenefitPrice = getTotalBenefitPrice();
+        if (giveAway != null) totalBenefitPrice += giveAway.getPrice();
+        if (totalBenefitPrice >= 5000) eventBadge = "별";
+        if (totalBenefitPrice >= 10000) eventBadge = "트리";
+        if (totalBenefitPrice >= 20000) eventBadge = "산타";
     }
     private int getTotalBenefitPrice(){
         int totalBenefitPrice = 0;

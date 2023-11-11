@@ -53,4 +53,8 @@ public class OutputView {
         if (giveAway != null) totalPrice += giveAway.getPrice();
         System.out.printf("-%s원\n", numberFormat.format(totalPrice));
     }
+    public void printTotalPriceAfterDiscount(Customer customer){
+        System.out.println("\n<할인 후 예상 결제 금액>");
+        System.out.printf("%s원\n", numberFormat.format(customer.getTotalPrice()));
+    }
 }

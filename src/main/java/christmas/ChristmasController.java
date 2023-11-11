@@ -41,6 +41,7 @@ public class ChristmasController {
         outputView.printGiveAway(giveAway);
         outputView.printBenefit(benefitPrice, giveAway);
         outputView.printTotalBenefitPrice(getTotalBenefitPrice(), giveAway);
+        outputView.printTotalPriceAfterDiscount(customer);
     }
     private void presentGiveAway(Customer customer){
         if (customer.getTotalPrice() >= 12000)

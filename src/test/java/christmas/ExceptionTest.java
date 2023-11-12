@@ -58,4 +58,26 @@ public class ExceptionTest {
             System.setIn(originalIn);
         }
     }
+    @DisplayName("메뉴개수_예외_테스트")
+    @Test
+    void checkInvalidMenuQuantity(){
+        try {
+            System.setOut(new PrintStream(outputStreamCaptor));
+
+            String[] input = {"1\n시저샐러드-a\n", "1\n초코케이크-1,해산물파스타--1\n", "1\n크리스마스파스타-0\n", "1\n제로콜라-11,해산물파스타-11\n"};
+
+            for (String eachInput : input){
+                inputStream = new ByteArrayInputStream(eachInput.getBytes());
+                System.setIn(inputStream);
+
+                Application.main(new String[]{});
+
+                assertThat(outputStreamCaptor.toString()).contains(ErrorMessages.INVALID_ORDER.getMessage());
+            }
+        }catch (final NoSuchElementException ignore) {
+        }finally {
+            System.setOut(originalOut);
+            System.setIn(originalIn);
+        }
+    }
 }

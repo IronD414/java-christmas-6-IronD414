@@ -66,3 +66,5 @@
 Map 초기화 방법: Map.of()
 ArrayList 초기화 방법: List.of()
 Map iterate 방법: Map.Entry<> for each (mapObject).entrySet()
+HashSet은 기본적으로 중복을 허용하지 않는 Set이지만 이는 원시타입에 적용되고 클래스의 집합일 경우는 직접 equals 그리고 hashCode를
+오버라이드해 정의해 줘야만 제대로 동작한다.

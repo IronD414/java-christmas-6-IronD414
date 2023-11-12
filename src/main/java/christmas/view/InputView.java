@@ -29,9 +29,8 @@ public class InputView {
         while (true){
             try{
                 userInput = Console.readLine();
-                order = convertUserInputIntoOrder(userInput);
+                order = convertUserInputIntoOrder(userInput);   // inherent dupe check
 
-                validateOrderDupeCheck(order);
                 validateOnlyDrinkCheck(order);
                 validateTotalMenuQuantityCheck(order);
                 break;
@@ -44,6 +43,7 @@ public class InputView {
     private Map<Menu, Integer> convertUserInputIntoOrder(String userInput){
         Map<Menu, Integer> order = new HashMap<>();
         String[] splitUserInput = userInput.split(",");
+        List<String> dupeChecker = new ArrayList<>();
         for (String eachUserInput : splitUserInput){
             if (!eachUserInput.contains("-")) throw new IllegalArgumentException();
 
@@ -51,6 +51,8 @@ public class InputView {
             if (splitEachUserInput.length != 2) throw new IllegalArgumentException();
 
             String userInputMenuName = splitEachUserInput[0];
+            if (dupeChecker.contains(userInputMenuName)) throw new IllegalArgumentException();
+            dupeChecker.add(userInputMenuName);
             int userInputMenuQuantity = validateConvertingStringToInt(splitEachUserInput[1]);
 
             if (userInputMenuQuantity < 1) throw new IllegalArgumentException();
@@ -58,10 +60,6 @@ public class InputView {
             order.put(validateInMenuCheckAndGenerateMenu(userInputMenuName), userInputMenuQuantity);
         }
         return order;
-    }
-    private void validateOrderDupeCheck(Map<Menu, Integer> order) throws IllegalArgumentException{
-        Set<Menu> orderKeySet = order.keySet();
-        if (orderKeySet.size() != new HashSet<>(orderKeySet).size()) throw new IllegalArgumentException();
     }
     private void validateOnlyDrinkCheck(Map<Menu, Integer> order) throws IllegalArgumentException{
         Set<Menu> orderKeySet = order.keySet();

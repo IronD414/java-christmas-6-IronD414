@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.constants.Standards;
 import christmas.domain.model.*;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -27,7 +28,8 @@ public class ChristmasController {
         customer.setVisitingDate(inputView.readDate());
         customer.setCart(inputView.readOrder());
 
-        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", customer.getVisitingDate());
+        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n", Standards.EVENT_MONTH.getValue(),
+                customer.getVisitingDate());
         outputView.printMenu(customer.getCart());
         outputView.printTotalPriceBeforeDiscount(customer);
 
@@ -45,14 +47,14 @@ public class ChristmasController {
         outputView.printEventBadge(eventBadge);
     }
     private void presentGiveAway(Customer customer){
-        if (customer.getTotalPrice() >= 12000)
+        if (customer.getTotalPrice() >= Standards.MIN_GIVEAWAY_PRICE.getValue())
             giveAway = new DrinkMenu("샴페인");
     }
     private int discountDDay(Customer customer){
         int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
         if (visitingDate > 25) return benefitPrice;
-        benefitPrice = 900 + 100*visitingDate;
+        benefitPrice = (Standards.MIN_DISCOUNT_DDAY.getValue() - 100) + 100*visitingDate;
         customer.discounted(benefitPrice);
         return benefitPrice;
     }
@@ -62,7 +64,8 @@ public class ChristmasController {
         Map<Menu, Integer> cart = customer.getCart();
         if (visitingDate%7 == 1 || visitingDate%7 == 2) return benefitPrice;
         for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
-            if (eachOrder.getKey() instanceof DessertMenu) benefitPrice = 2023 * eachOrder.getValue();
+            if (eachOrder.getKey() instanceof DessertMenu) benefitPrice
+                    = Standards.DISCOUNT_WEEKDAY.getValue() * eachOrder.getValue();
         }
         customer.discounted(benefitPrice);
         return benefitPrice;
@@ -73,7 +76,8 @@ public class ChristmasController {
         Map<Menu, Integer> cart = customer.getCart();
         if (visitingDate%7 == 1 || visitingDate%7 == 2){
             for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
-                if (eachOrder.getKey() instanceof MainMenu) benefitPrice += 2023 * eachOrder.getValue();
+                if (eachOrder.getKey() instanceof MainMenu) benefitPrice
+                        += Standards.DISCOUNT_WEEKEND.getValue() * eachOrder.getValue();
             }
             customer.discounted(benefitPrice);
             return benefitPrice;
@@ -83,16 +87,16 @@ public class ChristmasController {
     private int discountStar(Customer customer){
         int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
-        if (visitingDate%7 == 3 || visitingDate == 25) benefitPrice = 1000;
+        if (visitingDate%7 == 3 || visitingDate == 25) benefitPrice = Standards.DISCOUNT_STAR.getValue();
         customer.discounted(benefitPrice);
         return benefitPrice;
     }
     private void giveEventBadge(){
         int totalBenefitPrice = getTotalBenefitPrice();
         if (giveAway != null) totalBenefitPrice += giveAway.getPrice();
-        if (totalBenefitPrice >= 5000) eventBadge = "별";
-        if (totalBenefitPrice >= 10000) eventBadge = "트리";
-        if (totalBenefitPrice >= 20000) eventBadge = "산타";
+        if (totalBenefitPrice >= Standards.EVENT_BADGE_STAR.getValue()) eventBadge = "별";
+        if (totalBenefitPrice >= Standards.EVENT_BADGE_TREE.getValue()) eventBadge = "트리";
+        if (totalBenefitPrice >= Standards.EVENT_BADGE_SANTA.getValue()) eventBadge = "산타";
     }
     private int getTotalBenefitPrice(){
         int totalBenefitPrice = 0;

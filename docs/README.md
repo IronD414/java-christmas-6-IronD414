@@ -45,7 +45,7 @@
 ## 테스트 목록
 - [ ] <기능 테스트>
   - [X] Customer 기능 테스트
-  - [ ] ChristmasController 할인 기능 테스트
+  - [X] ChristmasController 할인 기능 테스트
 - [ ] <예외 테스트>
   - [ ] 날짜 예외: abc, 0, 32
   - [ ] 음료만 주문 예외: 레드와인*3

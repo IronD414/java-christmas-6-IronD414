@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.constants.Standards;
 import christmas.domain.model.Customer;
 import christmas.domain.model.Menu;
 import java.text.NumberFormat;
@@ -9,7 +10,7 @@ import java.util.Map;
 public class OutputView {
     private NumberFormat numberFormat = NumberFormat.getInstance();
     public void printWelcome(){
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+        System.out.printf("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n", Standards.EVENT_MONTH.getValue());
     }
     public void printMenu(Map<Menu, Integer> order) {
         System.out.println("\n<주문 메뉴>");

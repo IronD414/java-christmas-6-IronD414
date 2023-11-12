@@ -14,10 +14,11 @@ public class InputView {
             try{
                 input = Console.readLine();
                 int visitingDate = validateConvertingStringToInt(input);
-                if (visitingDate < 1 || visitingDate > 31) throw new IllegalArgumentException();
+                if (visitingDate < Standards.MONTHLY_FIRST_DATE.getValue() ||
+                        visitingDate > Standards.MONTHLY_LAST_DATE.getValue()) throw new IllegalArgumentException();
                 return visitingDate;
             }catch (IllegalArgumentException e){
-                System.out.println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+                System.out.println(ErrorMessages.INVALID_DATE.getMessage());
             }
         }
     }
@@ -35,7 +36,7 @@ public class InputView {
                 validateTotalMenuQuantityCheck(order);
                 break;
             }catch (IllegalArgumentException e){
-                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                System.out.println(ErrorMessages.INVALID_ORDER.getMessage());
             }
         }
         return order;
@@ -74,7 +75,7 @@ public class InputView {
         for (Menu orderKey : order.keySet()){
             totalMenuQuantity += order.get(orderKey);
         }
-        if (totalMenuQuantity > 20) throw new IllegalArgumentException();
+        if (totalMenuQuantity > Standards.MAX_ORDER_QUANTITY.getValue()) throw new IllegalArgumentException();
     }
     private Menu validateInMenuCheckAndGenerateMenu(String name) throws IllegalArgumentException{
         if (AppetizerConstants.getNameAll().contains(name)) return new AppetizerMenu(name);

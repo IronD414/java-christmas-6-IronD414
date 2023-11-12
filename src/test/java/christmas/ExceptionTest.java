@@ -8,7 +8,6 @@ import java.io.*;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ExceptionTest {
     PrintStream originalOut = System.out;
@@ -74,6 +73,26 @@ public class ExceptionTest {
 
                 assertThat(outputStreamCaptor.toString()).contains(ErrorMessages.INVALID_ORDER.getMessage());
             }
+        }catch (final NoSuchElementException ignore) {
+        }finally {
+            System.setOut(originalOut);
+            System.setIn(originalIn);
+        }
+    }
+    @DisplayName("중복_메뉴_예외_테스트")
+    @Test
+    void checkDupeOrder(){
+        try {
+            System.setOut(new PrintStream(outputStreamCaptor));
+
+            String input = "1\n타파스-1,바비큐립-5,타파스-3\n";
+
+            inputStream = new ByteArrayInputStream(input.getBytes());
+            System.setIn(inputStream);
+
+            Application.main(new String[]{});
+
+            assertThat(outputStreamCaptor.toString()).contains(ErrorMessages.INVALID_ORDER.getMessage());
         }catch (final NoSuchElementException ignore) {
         }finally {
             System.setOut(originalOut);

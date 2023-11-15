@@ -3,7 +3,6 @@ package christmas.domain.model;
 import christmas.constants.AppetizerConstants;
 
 public class AppetizerMenu extends Menu implements Food{
-    public AppetizerMenu(){}
     public AppetizerMenu(String name){
         for (AppetizerConstants appetizerEnum : AppetizerConstants.values()){
             if (name.equals(appetizerEnum.getName())){

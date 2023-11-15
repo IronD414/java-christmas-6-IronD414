@@ -27,6 +27,7 @@ public class Customer {
         totalPrice -= discountedPrice;
     }
     private void calculateTotalPrice(){
+        if (cart == null) return;
         totalPrice = 0;
         for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
             totalPrice += eachOrder.getValue() * eachOrder.getKey().getPrice();

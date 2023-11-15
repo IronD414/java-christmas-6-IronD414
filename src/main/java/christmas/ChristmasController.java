@@ -62,6 +62,7 @@ public class ChristmasController {
         int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
         Map<Menu, Integer> cart = customer.getCart();
+        if (cart == null) return 0;
         if (visitingDate%7 == 1 || visitingDate%7 == 2) return benefitPrice;
         for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
             if (eachOrder.getKey() instanceof DessertMenu) benefitPrice
@@ -74,6 +75,7 @@ public class ChristmasController {
         int benefitPrice = 0;
         int visitingDate = customer.getVisitingDate();
         Map<Menu, Integer> cart = customer.getCart();
+        if (cart == null) return 0;
         if (visitingDate%7 == 1 || visitingDate%7 == 2){
             for (Map.Entry<Menu, Integer> eachOrder : cart.entrySet()){
                 if (eachOrder.getKey() instanceof MainMenu) benefitPrice

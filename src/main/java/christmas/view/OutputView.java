@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private NumberFormat numberFormat = NumberFormat.getInstance();
+    private final NumberFormat numberFormat = NumberFormat.getInstance();
     public void printWelcome(){
         System.out.printf("안녕하세요! 우테코 식당 %d월 이벤트 플래너입니다.\n", Standards.EVENT_MONTH.getValue());
     }
     public void printMenu(Map<Menu, Integer> order) {
         System.out.println("\n<주문 메뉴>");
+        if (order == null) {
+            System.out.println("없음");
+            return;
+        }
         for (Map.Entry<Menu, Integer> eachOrder : order.entrySet()){
             System.out.printf("%s %d개\n", eachOrder.getKey().getName(), eachOrder.getValue());
         }
@@ -52,6 +56,10 @@ public class OutputView {
         System.out.println("\n<총혜택 금액>");
         int totalPrice = benefitPrice;
         if (giveAway != null) totalPrice += giveAway.getPrice();
+        if (totalPrice <= 0){
+            System.out.println("0원");
+            return;
+        }
         System.out.printf("-%s원\n", numberFormat.format(totalPrice));
     }
     public void printTotalPriceAfterDiscount(Customer customer){

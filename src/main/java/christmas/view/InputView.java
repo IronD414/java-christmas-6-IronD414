@@ -19,8 +19,11 @@ public class InputView {
                 return visitingDate;
             }catch (IllegalArgumentException e){
                 System.out.println(ErrorMessages.INVALID_DATE.getMessage());
+            }catch (final NoSuchElementException ignore){
+                break;
             }
         }
+        return 0;
     }
     public Map<Menu, Integer> readOrder(){
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
@@ -36,8 +39,9 @@ public class InputView {
                 break;
             }catch (IllegalArgumentException e){
                 System.out.println(ErrorMessages.INVALID_ORDER.getMessage());
-            }
+            }catch (final NoSuchElementException ignore){break;}
         }
+        order = null;
         return order;
     }
     private Map<Menu, Integer> convertUserInputIntoOrder(String userInput){
